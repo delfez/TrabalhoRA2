@@ -2,41 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <locale.h>
+#include "gerarBin.h"
 
-const char* DELIMITADOR = ";";
-
-typedef struct
-{
-    int numero;
-    char descricao[100];
-    int energia;
-    double proteina;
-    char categoria[80];
-
-} Alimento;
-
-void carregarTxt(Alimento alimentos[], int *total_alimentos, const char *nome_arquivo);
-void lerNumeroLinhas(int* total_linhas, const char *nome_arquivo);
-void salvarBin(Alimento alimentos[], int* total_alimentos);
-
-int main(){
-
-   setlocale(LC_ALL, "pt_BR.UTF-8");
-   
-   int total_alimentos = 0;   int total_linhas = 0;
-
-   lerNumeroLinhas(&total_linhas, "alimentos.csv");
-   
-   Alimento alimentos[total_linhas];
-   
-   carregarTxt(alimentos, &total_alimentos, "alimentos.csv");
-   
-   salvarBin(alimentos, &total_alimentos);
-   
-   
-   
-
-return 0;}
+//Realiza a leitura do numero de linhas para defincao do tamanho do vetor de Alimento
 
 void lerNumeroLinhas(int* total_linhas, const char *nome_arquivo){
 
@@ -55,12 +23,14 @@ void lerNumeroLinhas(int* total_linhas, const char *nome_arquivo){
 
 }
 
+// Abre e lê o arquivo texto com os dados dos alimentos e armazena em um vetor de Alimento
+
 void carregarTxt(Alimento alimentos[], int *total_alimentos, const char *nome_arquivo){
 
    FILE* arquivo; char linha[256]; *total_alimentos = 0;
    
    arquivo = fopen(nome_arquivo, "r");
-   if (!arquivo){ printf("ERRO AO ABRIR O ARQUIVO %s\n", nome_arquivo); return;}
+   if (!arquivo){ perror("ERRO AO ABRIR O ARQUIVO"); exit(EXIT_FAILURE);}
    
    printf("Lendo arquivo...\n");
    
@@ -83,7 +53,7 @@ void carregarTxt(Alimento alimentos[], int *total_alimentos, const char *nome_ar
    if(token != NULL){ alimentos[*total_alimentos].proteina = atof(token);}
    
    token = strtok(NULL, DELIMITADOR);
-   if(token != NULL){ strcpy(alimentos[*total_alimentos].categoria, token);}
+   if(token != NULL){ alimentos[*total_alimentos].categoria = stringParaCategoria(token);}
    
    (*total_alimentos)++;
    
@@ -92,6 +62,8 @@ void carregarTxt(Alimento alimentos[], int *total_alimentos, const char *nome_ar
    fclose(arquivo);
   
 }
+
+//Recebe o vetor de Alimento lido e salva em formato binario
 
 void salvarBin(Alimento alimentos[], int* total_alimentos){
 
@@ -103,6 +75,28 @@ void salvarBin(Alimento alimentos[], int* total_alimentos){
    printf("%d Alimentos salvos em arquivo binário com sucesso.\n", i);
 
 }
+
+//Converter string do arquivo texto para enum Categoria
+
+Categoria stringParaCategoria(const char* str){
+    if (strcmp(str, "Cereais e derivados") == 0) return CEREAIS;
+    if (strcmp(str, "Verduras, hortaliças e derivados") == 0) return VERDURAS;
+    if (strcmp(str, "Frutas e derivados") == 0) return FRUTAS;
+    if (strcmp(str, "Gorduras e óleos") == 0) return GORDURAS;
+    if (strcmp(str, "Pescados e frutos do mar") == 0) return PESCADOS;
+    if (strcmp(str, "Carnes e derivados") == 0) return CARNES;
+    if (strcmp(str, "Leite e derivados") == 0) return LEITE;
+    if (strcmp(str, "Bebidas (alcoólicas e não alcoólicas)") == 0) return BEBIDAS;
+    if (strcmp(str, "Ovos e derivados") == 0) return OVOS;
+    if (strcmp(str, "Produtos açucarados") == 0) return ACUCARADOS;
+    if (strcmp(str, "Miscelâneas") == 0) return MISC;
+    if (strcmp(str, "Outros alimentos industrializados") == 0) return INDUSTRIALIZADOS;
+    if (strcmp(str, "Alimentos preparados") == 0) return PREPARADOS;
+    if (strcmp(str, "Leguminosas e derivados") == 0) return LEGUMINOSAS;
+    if (strcmp(str, "Nozes e sementes") == 0) return NOZES;
+    return CATEGORIA_INVALIDA;
+}
+
 
 
 
