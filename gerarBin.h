@@ -3,7 +3,10 @@
 
 #define DELIMITADOR ";"
 
-typedef enum{
+typedef enum CategoriaAlimento CategoriaAlimento;
+typedef struct Alimento Alimento;
+
+ enum CategoriaAlimento{
 
     CEREAIS,
     VERDURAS,
@@ -22,21 +25,21 @@ typedef enum{
     NOZES,
     CATEGORIA_INVALIDA
 
-} Categoria;
+} ;
 
-typedef struct
-{
+struct Alimento{
     int numero;
     char descricao[100];
     int energia;
     double proteina;
-    Categoria categoria;
+    CategoriaAlimento categoria;
 
-} Alimento;
+} ;
 
 void carregarTxt(Alimento alimentos[], int *total_alimentos, const char *nome_arquivo);
 void lerNumeroLinhas(int* total_linhas, const char *nome_arquivo);
 void salvarBin(Alimento alimentos[], int* total_alimentos);
-Categoria stringParaCategoria(const char* str);
+CategoriaAlimento stringParaCategoria(const char* str);
+
 
 #endif

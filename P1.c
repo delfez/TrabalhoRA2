@@ -19,6 +19,7 @@ int main(){
    
    salvarBin(alimentos, &total_alimentos);
    
+   printf("%lu\n", sizeof(Alimento));
    
    
 
