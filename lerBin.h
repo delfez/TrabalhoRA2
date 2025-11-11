@@ -19,10 +19,16 @@ typedef struct AlimentoNodo AlimentoNodo;
 
 };
 
+extern Categoria* Categorias;
+
+
 const char* categoriaParaString(CategoriaAlimento categoria);
 void lerBin(const char* nome_arquivo);
-void imprimirAlimentoNodo(AlimentoNodo nodo);
+void imprimirAlimentoNodo(AlimentoNodo* nodo);
 void imprimirAlimento(Alimento temp);
+void inserirCategoria(AlimentoNodo* novo);
+void inserirAlimentoNodo(AlimentoNodo** lista, AlimentoNodo* novo);
+void imprimirCategorias();
 
 
 #endif

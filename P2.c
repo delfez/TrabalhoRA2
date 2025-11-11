@@ -13,6 +13,7 @@ int main (){
  
    lerBin(arquivo);
 
+   imprimirCategorias();
 
 
 
