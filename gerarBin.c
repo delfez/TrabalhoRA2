@@ -68,17 +68,17 @@ void carregarTxt(Alimento alimentos[], int *total_alimentos, const char *nome_ar
 void salvarBin(Alimento alimentos[], int* total_alimentos){
 
    printf("Salvando em arquivo binário...\n");
-   FILE *bin = fopen("alimentos.bin", "wb");
+   FILE *arquivo = fopen("alimentos.bin", "wb");
    int i;
-   for (i = 0; i < *total_alimentos; i++) { fwrite(&alimentos[i], sizeof(Alimento), 1, bin);}
-   fclose(bin);
+   for (i = 0; i < *total_alimentos; i++) { fwrite(&alimentos[i], sizeof(Alimento), 1, arquivo);}
+   fclose(arquivo);
    printf("%d Alimentos salvos em arquivo binário com sucesso.\n", i);
 
 }
 
 //Converter string do arquivo texto para enum Categoria
 
-Categoria stringParaCategoria(const char* str){
+CategoriaAlimento stringParaCategoria(const char* str){
     if (strcmp(str, "Cereais e derivados") == 0) return CEREAIS;
     if (strcmp(str, "Verduras, hortaliças e derivados") == 0) return VERDURAS;
     if (strcmp(str, "Frutas e derivados") == 0) return FRUTAS;
@@ -96,7 +96,6 @@ Categoria stringParaCategoria(const char* str){
     if (strcmp(str, "Nozes e sementes") == 0) return NOZES;
     return CATEGORIA_INVALIDA;
 }
-
 
 
 
