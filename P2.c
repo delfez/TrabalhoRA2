@@ -5,17 +5,21 @@
 #include <stdlib.h>
 #include <locale.h>
 
+
+
 int main (){
 
    setlocale(LC_ALL, "pt_BR.UTF-8");
    
-   char* arquivo = "alimentos.bin";
- 
+
+   const char* arquivo = "alimentos.bin";
    lerBin(arquivo);
 
-   imprimirCategorias();
 
+   executarInterface();
+	
 
+    
 
 return 0;
 }
